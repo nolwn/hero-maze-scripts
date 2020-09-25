@@ -1,4 +1,26 @@
 import Jimp from "jimp";
+import fs from "fs";
+
+const mapsOut = "./data/out";
+
+function loadFiles(dirpath: string) {
+	const fileName = `maps-${new Date().valueOf()}.json`;
+	fs.readdir(dirpath, async (_err, data) => {
+		const maps = [];
+
+		for (const file of data) {
+			const map = await readImgFile([...dirpath.split("/"), file].join("/"));
+			maps.push(map);
+		}
+		fs.writeFile(`${mapsOut}/${fileName}`, JSON.stringify(maps), {}, (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				console.log("Done");
+			}
+		});
+	});
+}
 
 async function readImgFile(filepath: string) {
 	try {
@@ -34,7 +56,6 @@ async function readImgFile(filepath: string) {
 			}
 			map += `${row}\n`;
 		}
-		console.log(map);
 
 		return map;
 	} catch (e) {
@@ -52,4 +73,4 @@ function makeRGBHex(color: number): string {
 	return `0x${hex}`.slice(0, 8); // remove alpha but still 8 because 0x added
 }
 
-readImgFile("./img/maps.png");
+loadFiles("./img/");

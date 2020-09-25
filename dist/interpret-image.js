@@ -8,6 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Jimp from "jimp";
+import fs from "fs";
+const mapsOut = "./data/out";
+function loadFiles(dirpath) {
+    const fileName = `maps-${new Date().valueOf()}.json`;
+    fs.readdir(dirpath, (_err, data) => __awaiter(this, void 0, void 0, function* () {
+        const maps = [];
+        for (const file of data) {
+            const map = yield readImgFile([...dirpath.split("/"), file].join("/"));
+            maps.push(map);
+        }
+        fs.writeFile(`${mapsOut}/${fileName}`, JSON.stringify(maps), {}, (err) => {
+            if (err) {
+                console.error(err);
+            }
+            else {
+                console.log("Done");
+            }
+        });
+    }));
+}
 function readImgFile(filepath) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -41,7 +61,6 @@ function readImgFile(filepath) {
                 }
                 map += `${row}\n`;
             }
-            console.log(map);
             return map;
         }
         catch (e) {
@@ -57,4 +76,4 @@ function makeRGBHex(color) {
     }
     return `0x${hex}`.slice(0, 8); // remove alpha but still 8 because 0x added
 }
-readImgFile("./img/maps.png");
+loadFiles("./img/");

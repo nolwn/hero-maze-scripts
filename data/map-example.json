@@ -1,0 +1,51 @@
+{
+	"map": [
+		[
+			"wall",
+			"wall",
+			"wall",
+			"wall"
+		],
+		[
+			"wall",
+			"floor",
+			"foor",
+			"wall"
+		],
+		[
+			"wall",
+			"exit",
+			"floor",
+			"floor"
+		],
+		[
+			"wall",
+			"wall",
+			"wall",
+			"wall"
+		]
+	],
+	"things": [
+		{
+			"type": "hero",
+			"pos": [
+				1,
+				1
+			]
+		},
+		{
+			"type": "exit",
+			"pos": [
+				1,
+				2
+			]
+		},
+		{
+			"type": "gold",
+			"pos": [
+				2,
+				2
+			]
+		}
+	]
+}
